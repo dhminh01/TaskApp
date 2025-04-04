@@ -11,6 +11,8 @@ ToDoApp is a simple and efficient task management application built with .NET 8.
 - Delete to-do items
 - Retrieve all to-do items
 - Retrieve a specific to-do item by ID
+- Bulk add multiple tasks in one request
+- Bulk delete multiple tasks in one request
 - Swagger documentation for API endpoints
 
 ## Installation
