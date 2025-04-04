@@ -16,11 +16,13 @@ namespace InterfaceAdapters.Repositories
 
         public async Task<IEnumerable<ToDoItem>> GetAllAsync()
         {
+
             return await _context.ToDoItems.ToListAsync();
         }
 
         public async Task<ToDoItem> GetByIdAsync(int id)
         {
+
             return await _context.ToDoItems.FindAsync(id);
         }
 
@@ -42,6 +44,30 @@ namespace InterfaceAdapters.Repositories
             if (item != null)
             {
                 _context.ToDoItems.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddRangeAsync(IEnumerable<ToDoItem> items)
+        {
+            foreach (var item in items)
+            {
+                item.CreatedDate = DateTime.UtcNow;
+            }
+
+            await _context.ToDoItems.AddRangeAsync(items);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRangeAsync(IEnumerable<int> ids)
+        {
+            var items = await _context.ToDoItems
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
+
+            if (items.Count != 0)
+            {
+                _context.ToDoItems.RemoveRange(items);
                 await _context.SaveChangesAsync();
             }
         }

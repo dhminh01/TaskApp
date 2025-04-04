@@ -13,6 +13,8 @@ builder.Services.AddScoped<UpdateToDoItem>();
 builder.Services.AddScoped<DeleteToDoItem>();
 builder.Services.AddScoped<GetAllToDoItems>();
 builder.Services.AddScoped<GetToDoItemById>();
+builder.Services.AddScoped<BulkAddToDoItems>();
+builder.Services.AddScoped<BulkDeleteToDoItems>();
 
 builder.Services.AddControllers();
 

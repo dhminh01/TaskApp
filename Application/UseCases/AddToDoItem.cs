@@ -10,6 +10,7 @@ namespace Application.UseCases
         public async Task ExecuteAsync(ToDoItem item)
         {
             if (string.IsNullOrEmpty(item.Title))
+
                 throw new ArgumentException("Title cannot be empty.");
 
             await _toDoRepository.AddAsync(item);

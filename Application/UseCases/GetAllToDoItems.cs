@@ -9,6 +9,7 @@ namespace Application.UseCases
 
         public async Task<IEnumerable<ToDoItem>> ExecuteAsync()
         {
+
             return await _toDoRepository.GetAllAsync();
         }
     }

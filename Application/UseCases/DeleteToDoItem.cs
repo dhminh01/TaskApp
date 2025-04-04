@@ -2,14 +2,9 @@
 
 namespace Application.UseCases
 {
-    public class DeleteToDoItem
+    public class DeleteToDoItem(IToDoRepository toDoRepository)
     {
-        private readonly IToDoRepository _toDoRepository;
-
-        public DeleteToDoItem(IToDoRepository toDoRepository)
-        {
-            _toDoRepository = toDoRepository;
-        }
+        private readonly IToDoRepository _toDoRepository = toDoRepository;
 
         public async Task<bool> ExecuteAsync(int id)
         {

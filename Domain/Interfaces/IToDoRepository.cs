@@ -9,5 +9,7 @@ namespace Domain.Interfaces
         Task AddAsync(ToDoItem item);
         Task UpdateAsync(ToDoItem item);
         Task DeleteAsync(int id);
+        Task AddRangeAsync(IEnumerable<ToDoItem> items);
+        Task DeleteRangeAsync(IEnumerable<int> ids);
     }
 }

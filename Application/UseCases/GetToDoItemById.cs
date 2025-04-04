@@ -3,14 +3,9 @@ using Domain.Interfaces;
 
 namespace Application.UseCases
 {
-    public class GetToDoItemById
+    public class GetToDoItemById(IToDoRepository toDoRepository)
     {
-        private readonly IToDoRepository _toDoRepository;
-
-        public GetToDoItemById(IToDoRepository toDoRepository)
-        {
-            _toDoRepository = toDoRepository;
-        }
+        private readonly IToDoRepository _toDoRepository = toDoRepository;
 
         public async Task<ToDoItem> ExecuteAsync(int id)
         {

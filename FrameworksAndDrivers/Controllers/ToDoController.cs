@@ -6,24 +6,21 @@ namespace FrameworksAndDrivers.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ToDoController : ControllerBase
+    public class ToDoController(AddToDoItem addToDoItem,
+                                UpdateToDoItem updateToDoItem,
+                                DeleteToDoItem deleteToDoItem, 
+                                GetAllToDoItems getAllToDoItems, 
+                                GetToDoItemById getToDoItemById, 
+                                BulkAddToDoItems bulkAddToDoItems,
+                                BulkDeleteToDoItems bulkDeleteToDoItems) : ControllerBase
     {
-        private readonly AddToDoItem _addToDoItem;
-        private readonly GetAllToDoItems _getAllToDoItems;
-        private readonly UpdateToDoItem _updateToDoItem;
-        private readonly DeleteToDoItem _deleteToDoItem;
-        private readonly GetToDoItemById _getToDoItemById;
-
-
-        public ToDoController(AddToDoItem addToDoItem, UpdateToDoItem updateToDoItem,
-                          DeleteToDoItem deleteToDoItem, GetAllToDoItems getAllToDoItems, GetToDoItemById getToDoItemById)
-        {
-            _addToDoItem = addToDoItem;
-            _getAllToDoItems = getAllToDoItems;
-            _updateToDoItem = updateToDoItem;
-            _deleteToDoItem = deleteToDoItem;
-            _getToDoItemById = getToDoItemById;
-        }
+        private readonly AddToDoItem _addToDoItem = addToDoItem;
+        private readonly GetAllToDoItems _getAllToDoItems = getAllToDoItems;
+        private readonly UpdateToDoItem _updateToDoItem = updateToDoItem;
+        private readonly DeleteToDoItem _deleteToDoItem = deleteToDoItem;
+        private readonly GetToDoItemById _getToDoItemById = getToDoItemById;
+        private readonly BulkAddToDoItems _bulkAddToDoItems = bulkAddToDoItems;
+        private readonly BulkDeleteToDoItems _bulkDeleteToDoItems = bulkDeleteToDoItems;
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ToDoItem item)
@@ -74,6 +71,22 @@ namespace FrameworksAndDrivers.Controllers
 
                 return NotFound();
             }
+
+            return NoContent();
+        }
+
+        [HttpPost("bulk-add")]
+        public async Task<IActionResult> BulkAdd([FromBody] List<ToDoItem> items)
+        {
+            await _bulkAddToDoItems.ExecuteAsync(items);
+
+            return Ok(items);
+        }
+
+        [HttpPost("bulk-delete")]
+        public async Task<IActionResult> BulkDelete([FromBody] List<int> ids)
+        {
+            await _bulkDeleteToDoItems.ExecuteAsync(ids);
 
             return NoContent();
         }
